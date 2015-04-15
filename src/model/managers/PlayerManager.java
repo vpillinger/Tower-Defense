@@ -13,6 +13,7 @@ public class PlayerManager {
 	public int lives;
 	public int gold;
 	public int gold_gain;
+	
 	public static PlayerManager getInstance(){
 		return manager;
 	}

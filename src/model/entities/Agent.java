@@ -13,10 +13,8 @@ import model.pathfinding.NavGraph;
 public class Agent extends NavigatingEntity {
 	private Entity target;
 	private Point2D startLoc;
-	private AgentStateMachine my_state_machine;
 	private String agent_class;
-	public int rest;
-	public int food;
+	
 	public double sight;
 	
 	
@@ -25,7 +23,6 @@ public class Agent extends NavigatingEntity {
 		super(initX, initY, r, speed, myWorld, graph);
 		
 		startLoc = new Point2D(initX, initY);
-		my_state_machine = new AgentStateMachine(this);
 		
 		this.sight = sight;
 		//it starts resting
@@ -60,7 +57,4 @@ public class Agent extends NavigatingEntity {
 		return startLoc;
 	}
 
-	public AgentStateMachine getMy_state_machine() {
-		return my_state_machine;
-	}
 }
