@@ -1,0 +1,3 @@
+---
+Agent: {hp: 1, speed: .01}
+Agent2: {hp: 2, speed: .02}

@@ -1,0 +1,4 @@
+---
+lives: 5
+gold: 100
+gold_gain: 1

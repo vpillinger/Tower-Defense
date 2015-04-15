@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="strasse_crossway" tilewidth="32" tileheight="32">
+  <image source="strasse_crossway.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="concrete" tilewidth="32" tileheight="32">
+  <image source="concrete.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="33" name="strasse_hori" tilewidth="32" tileheight="32">
+  <image source="strasse_hori.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="49" name="strasse_vert" tilewidth="32" tileheight="32">
+  <image source="strasse_vert.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="65" name="worldmapchip5fo" tilewidth="32" tileheight="32">
+  <image source="worldmapchip5fo.png" width="256" height="576"/>
+  <tile id="8">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+  <tile id="137">
+   <properties>
+    <property name="blocked" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2ZyW7DMAxE1S1t0/XSQ5tT073pvm///10doyBAGJKoMpSdBDw8JEYojSewPII4CiGMEjyCJ/AMXjJ1NbDUdh/uw324D/fhPhoOIxxnWALLYAWsCrUxxuBEMY60yYek3eicCQzAekFdjHNwoRy7xrQ3CnSuBIZgq6AuxjWYKMduMu3tAp3bDDtgF+yBfaE2xh24V4wjbXquJO1G5z9r7ShCn+8rvs7n8X21aD76mMt92PqgLKJsOw26fJOykq55Dlr54DlI2XYZdPkmZSWff2Dsg+cgZdtN0OWblJV8/qGxD55FlG0PQZdvUlbSNc9BX+fuw324D/fhPtzHbMw1Kz405z7T7H9r73dr09V+tzZd7Xdr4/td9+E+3Effc9XW5udRbdp9HKqjz/ZZ1jjxW+p7bkyqj5O6X6teijUl2jz7rXop1pRo8+yv2ceZhpI+Dj9LK11rP+AgQ9/rfFHeVzlewRt4Bx9z7OMTfIHv8PdcSfWTCF39h7+BXsCjECcAAA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2UQQ6AIBAD93tGT978sq/y4sEQQWh2Q4VO0njpBgcIq5mtg+TIJCXXi0gL8pCHPOQhjz4ef0ceXMzqsTyCsDSkBa/zqF1bHmWQe1X6v5p5Fg+Pdb2Z9b1iRR5ctHqcd6L66Iw8YvrojDxi+uiMPGL66Iw8YvrozKwerMjDjz35ljo5GDw8kIfZlgTh7b583aE3ent4weCB7H8Kg0fNOl/8waMGxvcK2RNGDwR5cCEPLkbzGCEXUeUrHBAnAAA=
+  </data>
+ </layer>
+</map>
