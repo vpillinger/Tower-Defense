@@ -16,6 +16,7 @@ import model.entities.Player;
 import model.entities.Prize;
 import model.entities.agentstates.WanderState;
 import model.entities.factories.EnemyFactory;
+import model.entities.factories.TowerFactory;
 import model.managers.ConsoleLog;
 import model.managers.EntityManager;
 import model.managers.PlayerManager;
@@ -91,6 +92,7 @@ public class ChaseState extends BasicGameState {
 			nav = new NavGraph(map, world);
 			
 			PlayerManager player = new PlayerManager("res/configs/player.txt");
+			TowerFactory tfactory = new TowerFactory("res/configs/towers.txt");
 			EnemyFactory factory = new EnemyFactory("res/configs/enemies.txt");
 			WaveManager waveManager = new WaveManager("res/configs/waves.txt", factory, world, nav);
 			waveManager.spawnWave();
@@ -114,6 +116,7 @@ public class ChaseState extends BasicGameState {
 		spriteRender = new SpriteRenderer(translator);
 		
 		ConsoleLog.getInstance().log("Entities Loaded");
+		
 	}
 	
 	@Override
@@ -173,7 +176,13 @@ public class ChaseState extends BasicGameState {
 
 	@Override
 	public void keyPressed(int key, char c) {
-	
+		if (c == '`'){
+			if(showLog){
+				showLog = false;
+			}else{
+			showLog = true;
+			}
+		}
 	}
 
 	@Override
@@ -181,4 +190,9 @@ public class ChaseState extends BasicGameState {
 	
 	}
 
+	public void mouseReleased(int button, int x, int y){
+		Point2D loc = translator.screenToWorld((int)(x + camera.cameraX), (int)(y +camera.cameraY));
+		//System.out.println(loc);
+		EntityManager.getInstance().addEntity(new BasicTower(loc, 5, .25, 1000, world, "basic"));
+	}
 }

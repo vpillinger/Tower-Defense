@@ -6,18 +6,20 @@ import model.managers.ConsoleLog;
 import model.managers.EntityManager;
 
 public class BasicTower extends Entity{
+	private String type;
 	public int fireRate;
 	private int fireTimer;
 	public double sightRange;
 	
 	public BasicTower(Point2D initLoc, double sightRange, double r, int fireRate,
-			World myWorld) {
+			World myWorld, String type) {
 		super(initLoc.getX(), initLoc.getY(), 0, r, myWorld);
 		
 		this.fireRate = fireRate;
 		fireTimer = fireRate;
 		
 		this.sightRange = sightRange;
+		this.type = type;
 	}
 
 	// Find the closest target and shoot it.
@@ -52,5 +54,9 @@ public class BasicTower extends Entity{
 	public void fire(Entity e){
 		ConsoleLog.getInstance().log("Fired at id: " + e.getId());
 		e.die();
+	}
+
+	public String getType() {
+		return type;
 	}
 }
