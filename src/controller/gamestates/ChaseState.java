@@ -36,6 +36,7 @@ import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Path;
 import org.newdawn.slick.util.pathfinding.Path.Step;
 
+import controller.input.InputController;
 import view.ConsoleView;
 import view.CoordinateConverter;
 import view.MiniMap;
@@ -64,6 +65,8 @@ public class ChaseState extends BasicGameState {
 	private SoundManager sound_manager;
 	private boolean showAgentCons;
 
+	InputController inputBinds;
+	TowerFactory tfactory;
 	
 
 	@Override
@@ -92,7 +95,8 @@ public class ChaseState extends BasicGameState {
 			nav = new NavGraph(map, world);
 			
 			PlayerManager player = new PlayerManager("res/configs/player.txt");
-			TowerFactory tfactory = new TowerFactory("res/configs/towers.txt");
+			tfactory = new TowerFactory("res/configs/towers.txt");
+			inputBinds = new InputController("res/configs/inputs.txt");
 			EnemyFactory factory = new EnemyFactory("res/configs/enemies.txt");
 			WaveManager waveManager = new WaveManager("res/configs/waves.txt", factory, world, nav);
 			waveManager.spawnWave();
@@ -183,6 +187,7 @@ public class ChaseState extends BasicGameState {
 			showLog = true;
 			}
 		}
+		inputBinds.selectTower(String.valueOf(c));
 	}
 
 	@Override
@@ -193,6 +198,6 @@ public class ChaseState extends BasicGameState {
 	public void mouseReleased(int button, int x, int y){
 		Point2D loc = translator.screenToWorld((int)(x + camera.cameraX), (int)(y +camera.cameraY));
 		//System.out.println(loc);
-		EntityManager.getInstance().addEntity(new BasicTower(loc, 5, .25, 1000, world, "basic"));
+		EntityManager.getInstance().addEntity(tfactory.makeTower(inputBinds.getSelected(), loc, world));
 	}
 }
