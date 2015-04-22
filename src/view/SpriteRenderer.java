@@ -52,9 +52,7 @@ public class SpriteRenderer {
 		}else{
 			Point pc = convert.worldToScreen(e.getX(), e.getY());
 			Point oval = convert.worldToScreen(e.getRadius(), e.getRadius());
-			//Point sight = convert.worldToScreen(e.sightRange, e.sightRange);
 			g.drawOval(pc.x-oval.x/2,pc.y-oval.x/2, oval.x, oval.x);
-			//g.draw(new Circle(pc.x, pc.y, sight.x));
 		}
 	}
 
