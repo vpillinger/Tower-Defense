@@ -13,7 +13,6 @@ import model.pathfinding.NavGraph;
 public class Agent extends NavigatingEntity {
 	private Point2D target;
 	private Point2D startLoc;
-	private String agent_class;
 	
 	public double sight;
 	
@@ -29,7 +28,7 @@ public class Agent extends NavigatingEntity {
 		//my_state_machine.ChangeState(new RestState());
 
 		// agentClass mainly going to be used for drawing
-		this.agent_class = agentClass;
+		this.entity_class = agentClass;
 		
 	}
 

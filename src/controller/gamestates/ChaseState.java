@@ -94,6 +94,9 @@ public class ChaseState extends BasicGameState {
 					world.getWorldH(), camera.mapWidth, camera.mapHeight);
 			nav = new NavGraph(map, world);
 			
+			//Sprites
+			spriteRender = new SpriteRenderer(translator, "res/configs/images.txt");
+			
 			PlayerManager player = new PlayerManager("res/configs/player.txt");
 			tfactory = new TowerFactory("res/configs/towers.txt");
 			inputBinds = new InputController("res/configs/inputs.txt");
@@ -116,8 +119,6 @@ public class ChaseState extends BasicGameState {
 		minimap = new MiniMap(miniMapImage, world);
 		//Console
 		consoleView = new ConsoleView();
-		//Sprites
-		spriteRender = new SpriteRenderer(translator);
 		
 		ConsoleLog.getInstance().log("Entities Loaded");
 		
@@ -170,7 +171,7 @@ public class ChaseState extends BasicGameState {
 		EntityManager.getInstance().updateEntities(t);
 		
 		// we have to tell the animations to update themselves
-		spriteRender.updateAnimations(t);
+		//spriteRender.updateAnimations(t);
 		
 		// If player out of lives, he dead
 		if(PlayerManager.getInstance().lives <= 0){

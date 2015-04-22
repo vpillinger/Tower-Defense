@@ -20,7 +20,7 @@ public abstract class Entity implements Mover {
 	protected double radius;
 	public World myWorld;
 	
-	
+	protected String entity_class;
 	
 	public Entity(double initX, double initY, double direction,double r, World myWorld){
 		setSelf(initX, initY, r, direction, myWorld);
@@ -121,5 +121,8 @@ public abstract class Entity implements Mover {
 	public void resetToStart() {
 		// TODO Auto-generated method stub
 		
+	}
+	public String getType() {
+		return entity_class;
 	}
 }

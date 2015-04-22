@@ -1,6 +1,12 @@
 package view;
 
 import java.awt.Point;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -13,6 +19,7 @@ import org.newdawn.slick.SlickException;
 
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Circle;
+import org.yaml.snakeyaml.Yaml;
 
 import model.entities.*;
 
@@ -20,37 +27,34 @@ import model.entities.*;
 public class SpriteRenderer {
 	
 	private CoordinateConverter convert;
-	private Animation playerImg;
-	private Image agentImg;
-	private Animation prizeImg;
-	
-	public SpriteRenderer(CoordinateConverter convert){
+	private Map<String, Image> images;
+
+	public SpriteRenderer(CoordinateConverter convert, String config) throws FileNotFoundException, SlickException{
 		this.convert = convert;
-		try {
-			playerImg = new Animation(new SpriteSheet("/res/player.png",32,32), 100);
-			agentImg = new Image("/res/agent.png");
-			prizeImg = new Animation(new SpriteSheet("/res/prize.png",32,32),100);
-			
-			playerImg.setAutoUpdate(false);
-			prizeImg.setAutoUpdate(false);
-		} catch (SlickException e) {
-			e.printStackTrace();
+		
+		Yaml yaml = new Yaml();
+		InputStream input = new FileInputStream(new File(config));
+		Map<String, String> image_files = (Map<String, String>) yaml.load(input);
+		images = new LinkedHashMap<String, Image>(); 
+		for(String key : image_files.keySet()){
+			images.put(key, new Image(image_files.get(key)));
 		}
+		System.out.println(images);
 	}
-	public void updateAnimations(int delta){
+	/*public void updateAnimations(int delta){
 		playerImg.update(delta);
 		prizeImg.update(delta);
-	}
+	}*/
 	
 	public void render(Entity e, GameContainer gc, Graphics g){
-		if(e instanceof Player){
-			renderH((Player)e, gc, g);
-		}else if(e instanceof Agent){
-			renderH((Agent)e,gc,g);
-		}else if(e instanceof Prize){
-			renderH((Prize)e, gc, g);
-		}else if(e instanceof BasicTower){
-			renderH((BasicTower)e,gc,g);
+		if(images.containsKey(e.getType())){
+			drawImage(images.get(e.getType()), e);
+		}else{
+			Point pc = convert.worldToScreen(e.getX(), e.getY());
+			Point oval = convert.worldToScreen(e.getRadius(), e.getRadius());
+			//Point sight = convert.worldToScreen(e.sightRange, e.sightRange);
+			g.drawOval(pc.x-oval.x/2,pc.y-oval.x/2, oval.x, oval.x);
+			//g.draw(new Circle(pc.x, pc.y, sight.x));
 		}
 	}
 
@@ -83,21 +87,18 @@ public class SpriteRenderer {
 		a.getCurrentFrame().drawCentered(pc.x, pc.y);
 	}
 	
-	private void renderH(Agent e, GameContainer gc, Graphics g) {
-		drawImage(agentImg,e);
-	}
-	private void renderH(Player e, GameContainer gc, Graphics g) {
-		drawMovingAnimatedSprite(playerImg, e);
-	}
-	private void renderH(Prize e, GameContainer gc, Graphics g) {
-		drawStationaryAnimatedSprite(prizeImg, e);
-	}
 	private void renderH(BasicTower e, GameContainer gc, Graphics g){
 		Point pc = convert.worldToScreen(e.getX(), e.getY());
 		Point oval = convert.worldToScreen(e.getRadius(), e.getRadius());
 		Point sight = convert.worldToScreen(e.sightRange, e.sightRange);
 		g.drawOval(pc.x-oval.x/2,pc.y-oval.x/2, oval.x, oval.x);
 		g.draw(new Circle(pc.x, pc.y, sight.x));
+	}
+	public Map<String, Image> getImages() {
+		return images;
+	}
+	public void setImages(Map<String, Image> images) {
+		this.images = images;
 	}
 	
 }

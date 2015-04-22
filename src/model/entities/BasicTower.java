@@ -6,7 +6,6 @@ import model.managers.ConsoleLog;
 import model.managers.EntityManager;
 
 public class BasicTower extends Entity{
-	private String type;
 	public int fireRate;
 	private int fireTimer;
 	public double sightRange;
@@ -19,7 +18,7 @@ public class BasicTower extends Entity{
 		fireTimer = fireRate;
 		
 		this.sightRange = sightRange;
-		this.type = type;
+		this.entity_class = type;
 	}
 
 	// Find the closest target and shoot it.
@@ -54,9 +53,5 @@ public class BasicTower extends Entity{
 	public void fire(Entity e){
 		ConsoleLog.getInstance().log("Fired at id: " + e.getId());
 		e.die();
-	}
-
-	public String getType() {
-		return type;
 	}
 }
