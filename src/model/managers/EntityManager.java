@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import math.Point2D;
+import model.entities.Bullet;
 import model.entities.Entity;
 import model.entities.NavigatingEntity;
 
@@ -11,6 +12,7 @@ import model.entities.NavigatingEntity;
 public class EntityManager implements Iterable<Entity>{
 	private static EntityManager em;
 	private ArrayList<Entity> entities;
+	private ArrayList<Entity> to_add;
 	public boolean repath;
 	
 	public static EntityManager getInstance(){
@@ -23,10 +25,11 @@ public class EntityManager implements Iterable<Entity>{
 	private EntityManager() {
 		super();
 		this.entities = new ArrayList<Entity>();
+		this.to_add = new ArrayList<Entity>();
 	}
 	
 	public void addEntity( Entity e){
-		entities.add(e);
+		to_add.add(e);
 	}
 	public void addEntity(int pos, Entity e){
 		if(pos < 0){
@@ -37,6 +40,10 @@ public class EntityManager implements Iterable<Entity>{
 	}
 	
 	public void updateEntities(int delta){
+		//first add new entities
+		entities.addAll(to_add);
+		to_add.clear();
+		
 		Iterator<Entity> i = EntityManager.getInstance().iterator();
 		while(i.hasNext()){
 			Entity e = i.next();

@@ -15,6 +15,7 @@ import model.entities.Entity;
 import model.entities.Player;
 import model.entities.Prize;
 import model.entities.agentstates.WanderState;
+import model.entities.factories.BulletFactory;
 import model.entities.factories.EnemyFactory;
 import model.entities.factories.TowerFactory;
 import model.managers.ConsoleLog;
@@ -98,7 +99,8 @@ public class ChaseState extends BasicGameState {
 			spriteRender = new SpriteRenderer(translator, "res/configs/images.txt");
 			
 			PlayerManager player = new PlayerManager("res/configs/player.txt");
-			tfactory = new TowerFactory("res/configs/towers.txt");
+			BulletFactory bullet_factory = new BulletFactory("res/configs/bullets.txt");
+			tfactory = new TowerFactory(bullet_factory, "res/configs/towers.txt");
 			inputBinds = new InputController("res/configs/inputs.txt");
 			EnemyFactory factory = new EnemyFactory("res/configs/enemies.txt");
 			WaveManager waveManager = new WaveManager("res/configs/waves.txt", factory, world, nav);
@@ -208,7 +210,6 @@ public class ChaseState extends BasicGameState {
 			nav.setTile(loc, true); //pretend to block that place
 			if(a.findPath(null, 0, 0, dest.x, dest.y) != null){
 				loc = nav.tileToWorld(p.x, p.y);
-				System.out.println(loc);
 				EntityManager.getInstance().addEntity(tfactory.makeTower(inputBinds.getSelected(), loc, world));
 				
 				//Repath

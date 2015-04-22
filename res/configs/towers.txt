@@ -1,3 +1,3 @@
 ---
-Tower: {sightRange: 5.0, fireRate: 1000}
-Tower2: {sightRange: 10.0, fireRate: 500}
+Tower: {sightRange: 5.0, fireRate: 1000, bulletType: Bullet}
+Tower2: {sightRange: 10.0, fireRate: 500, bulletType: Bullet2}
