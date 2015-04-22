@@ -187,6 +187,10 @@ public class NavGraph implements TileBasedMap {
 	public void setBlocked(boolean[][] blocked) {
 		this.blocked = blocked;
 	}
-	
+	public void setTile(Point2D loc, boolean val){
+		Point p = worldToTile(loc);
+		blocked[p.y][p.x] = val;
+		System.out.println(blocked[p.y][p.x] + " " +  p.x + " " + p.y);
+	}
 	
 }

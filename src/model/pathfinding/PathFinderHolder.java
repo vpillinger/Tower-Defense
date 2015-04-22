@@ -27,14 +27,14 @@ public class PathFinderHolder {
 		Point dest_tile = e.getNav().worldToTile(dest);
 		cur_path = path_finder.findPath(e, cur_tile.x, cur_tile.y, dest_tile.x, dest_tile.y);
 		//attempt to smooth path
-		cur_path = smoothPath(cur_path);
+		//cur_path = smoothPath(cur_path);
 		cur_step = 0;
 	}
 	public void generatePath(Point p) {
 		Point cur_tile = e.getNav().worldToTile(e.getLoc());
 		cur_path = path_finder.findPath(e, cur_tile.x, cur_tile.y, p.x, p.y);
 		//attempt to smooth path
-		cur_path = smoothPath(cur_path);
+		//cur_path = smoothPath(cur_path);
 		cur_step = 0;
 	}
 	

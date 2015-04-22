@@ -133,7 +133,7 @@ public class ChaseState extends BasicGameState {
 		//Translate graphics for everything not in UI
 		camera.translateGraphics();
 		// then draw navGraph
-		if(showNavGrid){
+		if(true){
 			navView.render(gc, g);
 		}
 		// then draw all entities
@@ -197,7 +197,25 @@ public class ChaseState extends BasicGameState {
 
 	public void mouseReleased(int button, int x, int y){
 		Point2D loc = translator.screenToWorld((int)(x + camera.cameraX), (int)(y +camera.cameraY));
+		if(!nav.blocked(loc)){
+			//place towers in center of the tile
+			Point p = nav.worldToTile(loc);
+			//We need to make sure that it is still possible to make it to goal.
+			AStarPathFinder a = new AStarPathFinder(nav, 9999, true);
+			Point dest = nav.worldToTile(new Point2D(50,50));
+			nav.setTile(loc, true); //pretend to block that place
+			if(a.findPath(null, 0, 0, dest.x, dest.y) != null){
+				loc = nav.tileToWorld(p.x, p.y);
+				System.out.println(loc);
+				EntityManager.getInstance().addEntity(tfactory.makeTower(inputBinds.getSelected(), loc, world));
+				
+				//Repath
+				EntityManager.getInstance().repath = true;
+			}else{//unblock if it wasn't possible
+				nav.setTile(loc, false);
+			}
+		}
 		//System.out.println(loc);
-		EntityManager.getInstance().addEntity(tfactory.makeTower(inputBinds.getSelected(), loc, world));
+		
 	}
 }

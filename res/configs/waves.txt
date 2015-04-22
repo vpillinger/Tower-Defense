@@ -2,5 +2,5 @@
 goal_x: 50.0
 goal_y: 50.0
 waves: 
- - {Agent: 10}
+ - {Agent: 5, Agent2: 5}
  
