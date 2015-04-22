@@ -143,8 +143,8 @@ public class ChaseState extends BasicGameState {
 		for (Entity e : EntityManager.getInstance()) {
 			spriteRender.render(e, gc, g);
 			if(e instanceof Agent){
-				if(showAgentPaths){
-					navView.renderAgentPath((Agent)e, agent_colors[cur], gc, g);
+				if(true){
+					navView.renderAgentPath((Agent)e, Color.blue, gc, g);
 				}
 				if(showAgentCons){
 					navView.renderAgentConsidered((Agent)e, con_colors[cur], gc, g);
@@ -201,8 +201,9 @@ public class ChaseState extends BasicGameState {
 			//place towers in center of the tile
 			Point p = nav.worldToTile(loc);
 			//We need to make sure that it is still possible to make it to goal.
-			AStarPathFinder a = new AStarPathFinder(nav, 9999, true);
+			AStarPathFinder a = new AStarPathFinder(nav, 9999, false);
 			Point dest = nav.worldToTile(new Point2D(50,50));
+			
 			nav.setTile(loc, true); //pretend to block that place
 			if(a.findPath(null, 0, 0, dest.x, dest.y) != null){
 				loc = nav.tileToWorld(p.x, p.y);

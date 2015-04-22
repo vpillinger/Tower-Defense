@@ -85,6 +85,10 @@ public class NavGraph implements TileBasedMap {
 		// Only handles AStar for now
 		if(c instanceof AStarPathFinder){
 			AStarPathFinder finder = (AStarPathFinder) c;
+			// first case
+			if(finder.getCurrentX() == -1 && finder.getCurrentY() == -1){
+				return blocked[ty][tx];
+			}
 			// If both x and y are different, then it must be diagonal
 			return blocked(finder.getCurrentX(),finder.getCurrentY(), tx, ty);
 		}
@@ -135,6 +139,7 @@ public class NavGraph implements TileBasedMap {
 		return blocked[y][x];
 	}
 	private boolean checkCornerCut(int cx, int cy, int tx, int ty){
+		
 		boolean cornerBlocked = false;
 		if(cx != tx && cy != ty){
 			//Edge Cases --literally
