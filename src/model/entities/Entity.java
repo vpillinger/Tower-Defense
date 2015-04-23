@@ -13,6 +13,7 @@ public abstract class Entity implements Mover {
 	private int id;
 	private static int nextId;
 	
+	public int hp;
 	public boolean toDie;
 	
 	protected Point2D loc;
@@ -35,6 +36,9 @@ public abstract class Entity implements Mover {
 		this.myWorld = myWorld;
 		//keep a unique id for every Entity
 		id = (nextId++);
+		
+		//for now hp=1
+		hp = 1;
 	}
 	
 	public abstract void update(int delta);
@@ -124,5 +128,11 @@ public abstract class Entity implements Mover {
 	}
 	public String getType() {
 		return entity_class;
+	}
+	public void hit(int damage) {
+		hp =- damage;
+		if(hp < 1){
+			die();
+		}
 	}
 }

@@ -1,6 +1,8 @@
 package model.entities;
 
+import math.Vector2D;
 import model.World;
+import model.managers.ConsoleLog;
 
 public class Bullet extends MovingEntity{
 	double aoe;
@@ -19,8 +21,17 @@ public class Bullet extends MovingEntity{
 
 	@Override
 	public void update(int delta) {
-		// TODO Auto-generated method stub
-		
+		if(isCollided(target)){
+			target.hit(damage);
+			if(aoe > 0){
+				// TODO AOE
+			}
+			ConsoleLog.getInstance().log("Hit Entity: " + target.getId() + "for " + damage + " damage");
+			die();
+		}else{
+			Vector2D move_vect = getStraightToPoint(target.getX(), target.getY());
+			move(move_vect, delta);
+		}
 	}
 
 }

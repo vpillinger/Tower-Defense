@@ -30,6 +30,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
@@ -136,7 +137,7 @@ public class ChaseState extends BasicGameState {
 		//Translate graphics for everything not in UI
 		camera.translateGraphics();
 		// then draw navGraph
-		if(true){
+		if(false){//debug
 			navView.render(gc, g);
 		}
 		// then draw all entities
@@ -146,7 +147,7 @@ public class ChaseState extends BasicGameState {
 		for (Entity e : EntityManager.getInstance()) {
 			spriteRender.render(e, gc, g);
 			if(e instanceof Agent){
-				if(true){
+				if(false){//debug
 					navView.renderAgentPath((Agent)e, Color.blue, gc, g);
 				}
 				if(showAgentCons){
@@ -158,13 +159,15 @@ public class ChaseState extends BasicGameState {
 		camera.untranslateGraphics();
 		
 		// now draw all UI elements
-		
+		// Draw Player stats bar 
+		// Draw The box
+		g.fill(new Rectangle(250, 550, 100, 50));
 		//draw MiniMap
 		//minimap.render(gc, g, camera, null);
 		
 		//draw Console
 		if(showLog)
-		consoleView.render(ConsoleLog.getInstance(), gc, g);
+			consoleView.render(ConsoleLog.getInstance(), gc, g);
 	}
 
 	@Override

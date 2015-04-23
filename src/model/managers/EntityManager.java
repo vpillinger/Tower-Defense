@@ -43,7 +43,7 @@ public class EntityManager implements Iterable<Entity>{
 		//first add new entities
 		entities.addAll(to_add);
 		to_add.clear();
-		
+		//now iterate through entities
 		Iterator<Entity> i = EntityManager.getInstance().iterator();
 		while(i.hasNext()){
 			Entity e = i.next();

@@ -3,3 +3,5 @@ Agent: /res/images/agent.png
 Agent2: /res/images/car.png
 Tower: /res/images/tower.png
 Tower2: /res/images/tower.png
+Bullet: /res/images/bullet.png
+Bullet2: /res/images/bullet2.png

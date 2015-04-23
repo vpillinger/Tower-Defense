@@ -17,13 +17,13 @@ public class Agent extends NavigatingEntity {
 	public double sight;
 	
 	
-	public Agent(double initX, double initY, double r, double speed, double sight, World myWorld,
+	public Agent(double initX, double initY, double r, double speed, int hp, World myWorld,
 			NavGraph graph, String agentClass) {
 		super(initX, initY, r, speed, myWorld, graph);
 		
 		startLoc = new Point2D(initX, initY);
 		target = new Point2D(50,50);
-		this.sight = sight;
+		this.hp = hp;
 		//it starts resting
 		//my_state_machine.ChangeState(new RestState());
 
