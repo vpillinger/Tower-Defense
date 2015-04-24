@@ -36,7 +36,7 @@ public class Agent extends NavigatingEntity {
 	public void update(int delta) {
 		if(pathing.done()){
 			//Make sure we contain the goal
-			if(this.contains(target)){
+			if(my_nav.worldToTile(loc).equals(my_nav.worldToTile(target))){
 				//We have reached the goal
 				ConsoleLog.getInstance().log("Goal Reached");
 				PlayerManager.getInstance().lives -= 1;
