@@ -1,6 +1,8 @@
 ---
 goal_x: 50.0
 goal_y: 50.0
+spawn_time: 5000
 waves: 
  - {Agent: 5, Agent2: 5}
+ - {Agent: 10, Agent2: 10}
  

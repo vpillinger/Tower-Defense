@@ -26,4 +26,8 @@ public class PlayerManager {
 		gold_gain = (int) map.get("gold_gain");
 		manager = this;
 	}
+	
+	public void gainGold(){
+		gold += gold_gain;
+	}
 }

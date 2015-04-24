@@ -43,6 +43,7 @@ import view.ConsoleView;
 import view.CoordinateConverter;
 import view.MiniMap;
 import view.NavGraphView;
+import view.PlayerView;
 import view.SpriteRenderer;
 
 public class ChaseState extends BasicGameState {
@@ -69,6 +70,7 @@ public class ChaseState extends BasicGameState {
 
 	InputController inputBinds;
 	TowerFactory tfactory;
+	WaveManager waveManager;
 	
 
 	@Override
@@ -104,8 +106,7 @@ public class ChaseState extends BasicGameState {
 			tfactory = new TowerFactory(bullet_factory, "res/configs/towers.txt");
 			inputBinds = new InputController("res/configs/inputs.txt");
 			EnemyFactory factory = new EnemyFactory("res/configs/enemies.txt");
-			WaveManager waveManager = new WaveManager("res/configs/waves.txt", factory, world, nav);
-			waveManager.spawnWave();
+			waveManager = new WaveManager("res/configs/waves.txt", factory, world, nav);
 		}catch(Exception e){
 			// well, we are in trouble now...
 			e.printStackTrace();
@@ -160,8 +161,8 @@ public class ChaseState extends BasicGameState {
 		
 		// now draw all UI elements
 		// Draw Player stats bar 
-		// Draw The box
-		g.fill(new Rectangle(250, 550, 100, 50));
+		new PlayerView().render(g, gc);
+		
 		//draw MiniMap
 		//minimap.render(gc, g, camera, null);
 		
@@ -182,6 +183,7 @@ public class ChaseState extends BasicGameState {
 		if(PlayerManager.getInstance().lives <= 0){
 			game.enterState(2);
 		}
+		waveManager.update(t);
 	}
 
 	@Override
@@ -202,6 +204,11 @@ public class ChaseState extends BasicGameState {
 	}
 
 	public void mouseReleased(int button, int x, int y){
+		int cost = tfactory.getCost(inputBinds.getSelected());
+		if(PlayerManager.getInstance().gold < cost){
+			return;//not enough money to place tower
+		}
+		PlayerManager.getInstance().gold -= cost;
 		Point2D loc = translator.screenToWorld((int)(x + camera.cameraX), (int)(y +camera.cameraY));
 		if(!nav.blocked(loc)){
 			//place towers in center of the tile

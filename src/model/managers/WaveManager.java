@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 
 import math.Point2D;
 import model.World;
@@ -23,13 +24,15 @@ public class WaveManager {
 	private EnemyFactory factory;
 	private World w;
 	private NavGraph nav;
-	
+	private int wave_timer;
+	private int spawn_time;
 	public WaveManager(String config, EnemyFactory factory, World w, NavGraph nav) throws FileNotFoundException{
 		Yaml yaml = new Yaml();
 		InputStream input = new FileInputStream(new File(config));
 		Map<String, Object> map = (Map<String, Object>) yaml.load(input);
 		
 		goal = new Point2D((double)map.get("goal_x"), (double)map.get("goal_y"));
+		spawn_time = (int) map.get("spawn_time");
 		waves = (ArrayList<Map<String,Integer>>)map.get("waves");
 		
 		this.factory = factory;
@@ -40,7 +43,7 @@ public class WaveManager {
 	
 	public void spawnWave(){
 		Map<String, Integer> wave = waves.get(waveNum);
-		System.out.println(wave);
+		ConsoleLog.getInstance().log("Spawning wave: " + waveNum);
 		for(String type: wave.keySet()){
 			for(int i=0; i < wave.get(type); i++){
 				NavigatingEntity e = factory.makeEnemy(type, new Point2D(0,Math.random() * w.getWorldH()), w, nav);
@@ -49,5 +52,18 @@ public class WaveManager {
 			}
 		}
 		waveNum++;
+		PlayerManager.getInstance().gainGold();
+	}
+
+	public void update(int t) {
+		wave_timer -= t;
+		if(wave_timer <= 0 && waveNum < waves.size()){
+			spawnWave();
+			wave_timer = spawn_time;
+		}
+		
+	}
+	public boolean hasWaves(){
+		return ( waveNum < waves.size() );
 	}
 }

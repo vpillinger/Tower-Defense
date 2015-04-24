@@ -32,4 +32,8 @@ public class TowerFactory {
 		return new BasicTower(initLoc,(double)tower.get("sightRange"),0.5,(int)tower.get("fireRate"), w, type,
 				(String)tower.get("bulletType"), factory);
 	}
+	public int getCost(String type) {
+		Map<String, Object> tower = towers.get(type);
+		return (int)tower.get("cost");
+	}
 }
