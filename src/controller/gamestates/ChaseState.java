@@ -176,6 +176,9 @@ public class ChaseState extends BasicGameState {
 			throws SlickException {
 		EntityManager.getInstance().updateEntities(t);
 		
+		
+		waveManager.update(t);
+		
 		// we have to tell the animations to update themselves
 		//spriteRender.updateAnimations(t);
 		
@@ -183,7 +186,7 @@ public class ChaseState extends BasicGameState {
 		if(PlayerManager.getInstance().lives <= 0){
 			game.enterState(2);
 		}
-		waveManager.update(t);
+		//check if no agents are left, and no waves are left, player wins
 	}
 
 	@Override

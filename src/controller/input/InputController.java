@@ -16,12 +16,11 @@ public class InputController {
 		Yaml yaml = new Yaml();
 		InputStream input = new FileInputStream(new File(config));
 		towerBinds = (Map<String ,String>) yaml.load(input);
-		System.out.println(towerBinds);
+		//System.out.println(towerBinds);
 	}
 	public void selectTower(String c){
 		if(towerBinds.containsKey(c)){
 			selected = towerBinds.get(c);
-			System.out.println(selected);
 		}
 	}
 	public String getSelected(){
