@@ -14,7 +14,6 @@ import model.entities.BasicTower;
 import model.entities.Entity;
 import model.entities.Player;
 import model.entities.Prize;
-import model.entities.agentstates.WanderState;
 import model.entities.factories.BulletFactory;
 import model.entities.factories.EnemyFactory;
 import model.entities.factories.TowerFactory;
@@ -45,6 +44,7 @@ import view.MiniMap;
 import view.NavGraphView;
 import view.PlayerView;
 import view.SpriteRenderer;
+import view.TowerSelectBox;
 
 public class ChaseState extends BasicGameState {
 
@@ -71,6 +71,7 @@ public class ChaseState extends BasicGameState {
 	InputController inputBinds;
 	TowerFactory tfactory;
 	WaveManager waveManager;
+	private TowerSelectBox towerBox;
 	
 
 	@Override
@@ -123,7 +124,8 @@ public class ChaseState extends BasicGameState {
 		minimap = new MiniMap(miniMapImage, world);
 		//Console
 		consoleView = new ConsoleView();
-		
+		//Tower Select Box
+		towerBox = new TowerSelectBox();
 		ConsoleLog.getInstance().log("Entities Loaded");
 		
 	}
@@ -166,6 +168,14 @@ public class ChaseState extends BasicGameState {
 		//draw MiniMap
 		//minimap.render(gc, g, camera, null);
 		
+		//Draw selected tower box
+		towerBox.render(g,gc);
+		
+		//tower place warning
+		if (inputBinds.getSelected() != null){
+			g.drawString("You are about to place a tower of type: " + inputBinds.getSelected(), gc.getWidth()/4 - 50, 15);
+		}
+		
 		//draw Console
 		if(showLog)
 			consoleView.render(ConsoleLog.getInstance(), gc, g);
@@ -207,11 +217,29 @@ public class ChaseState extends BasicGameState {
 	}
 
 	public void mouseReleased(int button, int x, int y){
+		if(inputBinds.getSelected() != null){
+			placeTower(x, y);
+			inputBinds.selectTower(null);
+		}else if (towerBox.isUpgradePressed(x, y)){
+			if(PlayerManager.getInstance().gold >= 50){
+				PlayerManager.getInstance().gold -= 50;
+				towerBox.selectedTower.sightRange += 5;
+			}
+		}else{
+			Point2D loc = translator.screenToWorld((int)(x + camera.cameraX), (int)(y +camera.cameraY));
+			Point p = nav.worldToTile(loc);
+			loc = nav.tileToWorld(p.x, p.y);
+			
+			towerBox.selectedTower = EntityManager.getInstance().getTowerAt(loc);
+		}
+		
+	}
+	
+	private void placeTower(int x, int y){
 		int cost = tfactory.getCost(inputBinds.getSelected());
 		if(PlayerManager.getInstance().gold < cost){
 			return;//not enough money to place tower
 		}
-		PlayerManager.getInstance().gold -= cost;
 		Point2D loc = translator.screenToWorld((int)(x + camera.cameraX), (int)(y +camera.cameraY));
 		if(!nav.blocked(loc)){
 			//place towers in center of the tile
@@ -227,11 +255,10 @@ public class ChaseState extends BasicGameState {
 				
 				//Repath
 				EntityManager.getInstance().repath = true;
+				PlayerManager.getInstance().gold -= cost;
 			}else{//unblock if it wasn't possible
 				nav.setTile(loc, false);
 			}
 		}
-		//System.out.println(loc);
-		
 	}
 }

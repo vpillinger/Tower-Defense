@@ -19,7 +19,7 @@ public class InputController {
 		//System.out.println(towerBinds);
 	}
 	public void selectTower(String c){
-		if(towerBinds.containsKey(c)){
+		if(c == null || towerBinds.containsKey(c)){
 			selected = towerBinds.get(c);
 		}
 	}

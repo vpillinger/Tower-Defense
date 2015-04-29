@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import math.Point2D;
+import model.entities.BasicTower;
 import model.entities.Bullet;
 import model.entities.Entity;
 import model.entities.NavigatingEntity;
@@ -62,6 +63,17 @@ public class EntityManager implements Iterable<Entity>{
 	@Override
 	public Iterator<Entity> iterator() {
 		return entities.iterator();
+	}
+
+	public BasicTower getTowerAt(Point2D loc) {
+		for(Entity e : entities){
+			if(e instanceof BasicTower){
+				if(e.getLoc().equals(loc)){
+					return (BasicTower) e;
+				}
+			}
+		}
+		return null;
 	}
 
 }

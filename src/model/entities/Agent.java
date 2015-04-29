@@ -4,8 +4,6 @@ import java.awt.Point;
 
 import math.Point2D;
 import model.World;
-import model.entities.agentstates.AgentStateMachine;
-import model.entities.agentstates.RestState;
 import model.managers.ConsoleLog;
 import model.managers.PlayerManager;
 import model.pathfinding.NavGraph;
@@ -42,6 +40,9 @@ public class Agent extends NavigatingEntity {
 				PlayerManager.getInstance().lives -= 1;
 				die();
 			}else{//else walk in straight line towards target
+				move(this.getStraightToPoint(target.getX(), target.getY()), delta);
+				//try to repath because we are stuck in a tower, probably
+				pathing.generatePath(target);
 				//if collides with tower, kill tower
 				//if kills tower, we should repath too.
 				
