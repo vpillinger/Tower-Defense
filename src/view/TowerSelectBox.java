@@ -3,8 +3,11 @@ package view;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
+import controller.gamestates.Camera;
 import model.entities.BasicTower;
 
 public class TowerSelectBox {
@@ -12,7 +15,7 @@ public class TowerSelectBox {
 	int ty;
 	int tx;
 	
-	public void render(Graphics g, GameContainer gc){
+	public void render(Graphics g, GameContainer gc, CoordinateConverter c, Camera camera){
 		if (selectedTower == null){
 			return;
 		}
@@ -32,6 +35,13 @@ public class TowerSelectBox {
 		g.fill(new Rectangle(tx,ty-20, 150, 20));
 		g.setColor(Color.white);
 		g.drawString("Upgrade: 50 gold" , tx, ty-15);
+		
+		//also draw tower range
+		java.awt.Point p = c.worldToScreen(selectedTower.getLoc());
+		int r = c.worldToScreen(selectedTower.sightRange, 0).x;
+		camera.translateGraphics();
+		g.draw(new Circle((float)p.x, (float)p.y, r));
+		camera.untranslateGraphics();
 	}
 	
 	public boolean isUpgradePressed(int x, int y){

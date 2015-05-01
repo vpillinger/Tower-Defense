@@ -15,16 +15,18 @@ import model.pathfinding.NavGraph;
 import org.yaml.snakeyaml.Yaml;
 
 public class EnemyFactory {
-	Map<String, Map<String, Double>> agents;
+	Map<String, Map<String, Number>> agents;
 	public EnemyFactory(String config) throws FileNotFoundException{
 		Yaml yaml = new Yaml();
 		InputStream input = new FileInputStream(new File(config));
-		agents = (Map<String,Map<String, Double>>) yaml.load(input);
+		agents = (Map<String,Map<String, Number>>) yaml.load(input);
 		System.out.println(agents);
 	}
 	public NavigatingEntity makeEnemy(String type, Point2D initLoc, World w, NavGraph nav){
-		Map<String, Double> enemy = agents.get(type);
+		Map<String, Number> enemy = agents.get(type);
 		//System.out.println(enemy);
-		return new Agent(initLoc.getX(),initLoc.getY(),.25,enemy.get("speed"), 0,w,nav, type);
+		Agent a = new Agent(initLoc.getX(),initLoc.getY(),.25,(double)enemy.get("speed"), 0,w,nav, type);
+		a.hp = (int)enemy.get("hp");
+		return a;
 	}
 }

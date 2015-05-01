@@ -1,8 +1,12 @@
 package model.entities;
 
+import org.newdawn.slick.geom.Circle;
+
 import math.Vector2D;
 import model.World;
 import model.managers.ConsoleLog;
+import model.managers.EntityManager;
+import model.managers.ExplosionManager;
 
 public class Bullet extends MovingEntity{
 	double aoe;
@@ -25,6 +29,13 @@ public class Bullet extends MovingEntity{
 			target.hit(damage);
 			if(aoe > 0){
 				// TODO AOE
+				Circle splash = new Circle((float)loc.getX(), (float)loc.getY(), (float)aoe);
+				ExplosionManager.getInstance().addExplosion(splash);
+				for (Entity e : EntityManager.getInstance() ){
+					if(e instanceof Agent && splash.contains((float)e.getX(), (float)e.getY())){
+						e.hit(damage);
+					}
+				}
 			}
 			ConsoleLog.getInstance().log("Hit Entity: " + target.getId() + "for " + damage + " damage");
 			die();

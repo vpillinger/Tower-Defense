@@ -40,6 +40,7 @@ import org.newdawn.slick.util.pathfinding.Path.Step;
 import controller.input.InputController;
 import view.ConsoleView;
 import view.CoordinateConverter;
+import view.ExplosionView;
 import view.MiniMap;
 import view.NavGraphView;
 import view.PlayerView;
@@ -159,6 +160,8 @@ public class ChaseState extends BasicGameState {
 				cur++;
 			}
 		}
+		// Now draw all explosions
+		(new ExplosionView()).render(g, gc, translator);
 		camera.untranslateGraphics();
 		
 		// now draw all UI elements
@@ -169,7 +172,7 @@ public class ChaseState extends BasicGameState {
 		//minimap.render(gc, g, camera, null);
 		
 		//Draw selected tower box
-		towerBox.render(g,gc);
+		towerBox.render(g,gc, translator, camera);
 		
 		//tower place warning
 		if (inputBinds.getSelected() != null){
