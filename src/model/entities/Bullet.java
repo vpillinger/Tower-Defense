@@ -26,9 +26,7 @@ public class Bullet extends MovingEntity{
 	@Override
 	public void update(int delta) {
 		if(isCollided(target)){
-			target.hit(damage);
-			if(aoe > 0){
-				// TODO AOE
+			if(aoe > 0){// aoe or single target
 				Circle splash = new Circle((float)loc.getX(), (float)loc.getY(), (float)aoe);
 				ExplosionManager.getInstance().addExplosion(splash);
 				for (Entity e : EntityManager.getInstance() ){
@@ -36,6 +34,8 @@ public class Bullet extends MovingEntity{
 						e.hit(damage);
 					}
 				}
+			}else{
+				target.hit(damage);
 			}
 			ConsoleLog.getInstance().log("Hit Entity: " + target.getId() + "for " + damage + " damage");
 			die();

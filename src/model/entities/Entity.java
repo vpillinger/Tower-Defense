@@ -130,7 +130,7 @@ public abstract class Entity implements Mover {
 		return entity_class;
 	}
 	public void hit(int damage) {
-		hp =- damage;
+		hp -= damage;
 		if(hp < 1){
 			die();
 		}

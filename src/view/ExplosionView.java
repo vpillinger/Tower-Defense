@@ -18,11 +18,14 @@ public class ExplosionView{
 		while(i.hasNext()){
 			
 			Circle cir = (Circle) i.next();
+			//convert to screen
 			float r = (t.worldToScreen(cir.radius, 0)).x;
 			float x = (t.worldToScreen(cir.getCenterX(), 0)).x;
 			float y =  (t.worldToScreen(0, cir.getCenterY())).y;
-			System.out.println(x + " " + y + " " + r);
-			activeExplosions.put(new Circle(x,y,r), 60);
+			
+			//add to drawing list
+			activeExplosions.put(new Circle(x,y,r), 120);
+			
 			i.remove();
 		}
 		drawExplosions(1, g);

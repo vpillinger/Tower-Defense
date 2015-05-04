@@ -1,4 +1,4 @@
 ---
-lives: 100
+lives: 20
 gold: 100
 gold_gain: 100
