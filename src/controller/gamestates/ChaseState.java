@@ -12,8 +12,6 @@ import model.World;
 import model.entities.Agent;
 import model.entities.BasicTower;
 import model.entities.Entity;
-import model.entities.Player;
-import model.entities.Prize;
 import model.entities.factories.BulletFactory;
 import model.entities.factories.EnemyFactory;
 import model.entities.factories.TowerFactory;
@@ -63,8 +61,6 @@ public class ChaseState extends BasicGameState {
 	private CoordinateConverter translator;
 	
 	private World world;
-	private Player player;
-	private Prize prize;
 	private NavGraph nav;
 	private SoundManager sound_manager;
 	private boolean showAgentCons;
